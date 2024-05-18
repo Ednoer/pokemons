@@ -5,6 +5,7 @@ import { TouchableOpacity, StyleSheet, Image, Text } from 'react-native';
 import { PokemonCustom } from '../types/pokemonList'
 import { getImageColors } from '../utils/getColors'
 import { Card } from './Card';
+import { colors } from '../theme/colors';
 
 type Props = {
     item: PokemonCustom,
@@ -40,7 +41,7 @@ const PokemonCard = ({ item }: Props) => {
             {/* @ts-ignore */ }
             <TouchableOpacity onPress={() => navigate('Pokemon', {
                     pokemonItem: item,
-                    color: background
+                    color: colors.red
                 })}
                 activeOpacity={0.9}
             >
