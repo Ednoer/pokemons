@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { Text, View } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { useDebounce } from '../hooks/useDebounce';
 
 interface Props {
     onDebounce: (value: string) => void;
+    placeholder: string;
+    onChangeText: (value: string) => void;
+    value: string
 }
 
-export const SearchInput = ({ onDebounce }: Props) => {
+export const SearchInput = ({ onDebounce, placeholder, onChangeText, value }: Props) => {
     const [searchValue, setSearchValue] = useState('')
     const debouncedValue = useDebounce(searchValue)
 
@@ -16,19 +19,34 @@ export const SearchInput = ({ onDebounce }: Props) => {
     }, [debouncedValue])
 
     return (
-        <View style={{ padding: 20 }}>
+        <View style={styles.container}>
             <TextInput
-                placeholder='Search Pokemon'
-                autoCorrect={false}
-                autoCapitalize='none'
-                style={{
-                    borderColor: 'black',
-                    borderWidth: 2
-                }}
-                value={searchValue}
-                onChangeText={setSearchValue}
+                style={styles.input}
+                placeholder={placeholder}
+                onChangeText={onChangeText}
+                value={value}
+                placeholderTextColor="#999"
             />
-            <Text>{JSON.stringify(searchValue, null, 4)}</Text>
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        borderWidth: 1,
+        borderColor: '#ddd',
+        borderRadius: 25,
+        paddingHorizontal: 10,
+        paddingVertical: 8,
+        alignSelf: 'center',
+        elevation: 1,
+    },
+    input: {
+        flex: 1,
+        fontSize: 16,
+        color: '#000',
+    },
+});

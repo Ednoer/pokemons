@@ -24,7 +24,7 @@ export const SearchScreen = () => {
 
     return (
         <View>
-            <SearchInput onDebounce={setTerm} />
+            {/* <SearchInput onDebounce={setTerm} /> */}
             <Text>{term}</Text>
         </View>
     )
