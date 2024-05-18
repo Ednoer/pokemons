@@ -7,6 +7,7 @@ import { usePokemons } from "../hooks/usePokemons";
 import { Spinner } from "../components/Spinner";
 import { FlatList } from "react-native-gesture-handler";
 import { PokedexItem } from "../components/PokedexItem";
+import { Pokeball } from "../components/Pokeball";
 
 export const PokedexScreen = () => {
     const { pokemons, getPokemons, status } = usePokemons();
@@ -43,6 +44,19 @@ export const PokedexScreen = () => {
                     keyExtractor={pokemon => pokemon.id}
                     renderItem={({ item }) => <PokedexItem item={item}/>}
                     showsVerticalScrollIndicator={false}
+                    onEndReached={getPokemons}
+                    onEndReachedThreshold={0.4}
+                    ListFooterComponent={<Spinner />}
+                    numColumns={2}
+                    columnWrapperStyle={{
+                        justifyContent: 'space-evenly'
+                    }}
+                    ListHeaderComponent={
+                        <View style={styles.titleContainer}>
+                            <Pokeball size={180} position={-50} />
+                            <Text style={styles.title}>Pokédex</Text>
+                        </View>
+                    }
                 />
             </View>
         </SafeAreaView>
