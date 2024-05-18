@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { TouchableOpacity, StyleSheet, Image, Text } from 'react-native';
 
 import { PokemonCustom } from '../types/pokemonList'
 import { getImageColors } from '../utils/getColors'
@@ -35,21 +35,16 @@ const PokemonCard = ({ item }: Props) => {
     //     }
     // }, [])
 
-    if (background === DEFAULT_COLOR) {
-        return <Card id={id} name={name} pokeballColor='gray' />
-    }
-
     return (
         <>
-            {/* @ts-ignore */}
+            {/* @ts-ignore */ }
             <TouchableOpacity onPress={() => navigate('Pokemon', {
-                pokemonItem: item,
-                color: background
-            })}
+                    pokemonItem: item,
+                    color: background
+                })}
                 activeOpacity={0.9}
-
             >
-                <Card id={id} name={name} color='#fff' backgroundColor={background}>
+                <Card id={id} name={name} pokeballColor='gray'>
                     <Image source={{ uri: picture }} style={styles.img} />
                 </Card>
             </TouchableOpacity>
