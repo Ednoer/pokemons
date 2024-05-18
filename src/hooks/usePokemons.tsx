@@ -30,7 +30,6 @@ export const usePokemons = () => {
     const getPokemons = async () => {
         try {
             const response = await pokeAPI.get<PokemonsResponse>(urlAllPokemons.current)
-            console.log('response', response.data.results)
             urlAllPokemons.current = response.data.next
             buildPokemonCustom(response.data.results)
         } catch (error) {

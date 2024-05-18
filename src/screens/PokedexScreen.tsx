@@ -4,9 +4,12 @@ import { colors } from "../theme/colors";
 import { useEffect } from "react";
 import SplashScreen from 'react-native-splash-screen';
 import { usePokemons } from "../hooks/usePokemons";
+import { Spinner } from "../components/Spinner";
+import { FlatList } from "react-native-gesture-handler";
+import { PokedexItem } from "../components/PokedexItem";
 
 export const PokedexScreen = () => {
-    const {pokemons, getPokemons, status} = usePokemons();
+    const { pokemons, getPokemons, status } = usePokemons();
 
     useEffect(() => {
         if (SplashScreen) {
@@ -14,23 +17,36 @@ export const PokedexScreen = () => {
         }
     }, []);
 
-    return (
-        <View style={styles.withoutResults}>
-            <Text style={styles.withoutResultText}>
-                At this time there are no pokemons available
-            </Text>
-            <Image
-                style={styles.withoutResultImg}
-                source={require('../assets/pokeball-white.png')}
-            />
-        </View>
-    )
+    if (status === 'loading' && pokemons.length === 0) {
+        return <Spinner />;
+    }
 
-    // return (
-    //     <SafeAreaView>
-    //         <Text>Pokedex Screen</Text>
-    //     </SafeAreaView>
-    // )
+    if (status === 'error' || (status === 'success' && pokemons.length === 0)) {
+        return (
+            <View style={styles.withoutResults}>
+                <Text style={styles.withoutResultText}>
+                    At this time there are no pokemons available
+                </Text>
+                <Image
+                    style={styles.withoutResultImg}
+                    source={require('../assets/pokeball-white.png')}
+                />
+            </View>
+        )
+    }
+
+    return (
+        <SafeAreaView>
+            <View>
+                <FlatList
+                    data={pokemons}
+                    keyExtractor={pokemon => pokemon.id}
+                    renderItem={({ item }) => <PokedexItem item={item}/>}
+                    showsVerticalScrollIndicator={false}
+                />
+            </View>
+        </SafeAreaView>
+    )
 }
 
 const styles = StyleSheet.create({
